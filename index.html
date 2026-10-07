@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>حصن المسلم — أذكار وأدعية</title>
+<meta name="theme-color" content="#0a0f0d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="حصن المسلم">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
@@ -447,6 +455,11 @@ $('#tBack').onclick=closeT;$('#tAdd').onclick=()=>{fromS=0;zForm()};$('#tSet').o
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#sh').classList.contains('open'))closeSh();else if($('#tsb').classList.contains('open'))closeT()}});
 pill();
 load();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 </script>
 </body>
 </html>
