@@ -34,6 +34,9 @@ self.addEventListener('fetch', e => {
   const allowedCDN = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com' || url.hostname === 'cdnjs.cloudflare.com';
   if (!inScope && !allowedCDN) return;
 
+  // ملفات الصوت (الأذان والتذكيرات): يتعامل معها المتصفح مباشرة بدون الكاش (طلبات Range)
+  if (url.pathname.includes('/audio/')) return;
+
   // الصفحات: الشبكة أولًا، والكاش عند انقطاع الإنترنت
   if (req.mode === 'navigate') {
     e.respondWith(
