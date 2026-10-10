@@ -453,7 +453,7 @@ h1{overflow-wrap:anywhere}
 .ad-fl{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:19px;border:1px dashed var(--ln)}
 .ad-fl>div{min-width:0}
 .ad-fl b{display:block;font-size:13px;font-weight:800}
-.ad-fl small{display:block;margin-top:3px;color:var(--mu);font-size:11.5px;direction:ltr;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ad-fl small{display:block;margin-top:3px;color:var(--mu);font-size:11.5px;direction:rtl;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ad-fl em{display:block;margin-top:4px;font-style:normal;font-size:11.5px;font-weight:700;color:#d9955f}
 .ad-ft{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:6px 4px 0}
 .ad-ft small{flex:1 1 180px;color:var(--mu);font-size:12px;line-height:1.8}
@@ -1046,8 +1046,8 @@ function aSlot(r,s,c){
 
 function aRem(r){
  const it=AD.get().remind.items[r.id],miss=AD.cat().rm[r.file]===false,open=aOR===r.id,act=r.slots.filter(s=>it[s.key].on);
- return`<div class="ad-c ad-ac${open?' open':''}${act.length?' on':''}" data-w="r" data-id="${r.id}"><button type="button" class="ad-ah" data-ad="acc" data-w="r" data-id="${r.id}" aria-expanded="${open}"><span class="ad-ki q${act.length?' on':''}"><i class="fa-solid fa-${r.ic}"></i></span><span class="ad-at"><b>${r.title}</b><span class="ad-pills">${act.length?act.map(s=>`<span class="ad-pi on"><i class="fa-solid fa-bell"></i>${rmLab(s,it[s.key])}</span>`).join(''):`<span class="ad-pi">${r.sub}</span>`}${miss?'<span class="ad-pi w">الملف غير موجود</span>':''}</span></span><i class="fa-solid fa-chevron-down ad-chev"></i></button>`
- +`<div class="ad-bd"><div><div class="ad-bi">${r.slots.map(s=>aSlot(r,s,it[s.key])).join('')}<div class="ad-fl"><div><b>ملف الصوت</b><small>audio/reminders/${r.file}.mp3</small>${miss?'<em>ضع الملف في هذا المسار ثم أعد الفحص</em>':''}</div>${aPlay('remind',r.file)}</div></div></div></div></div>`}
+ return`<div class="ad-c ad-ac${open?' open':''}${act.length?' on':''}" data-w="r" data-id="${r.id}"><button type="button" class="ad-ah" data-ad="acc" data-w="r" data-id="${r.id}" aria-expanded="${open}"><span class="ad-ki q${act.length?' on':''}"><i class="fa-solid fa-${r.ic}"></i></span><span class="ad-at"><b>${r.title}</b><span class="ad-pills">${act.length?act.map(s=>`<span class="ad-pi on"><i class="fa-solid fa-bell"></i>${rmLab(s,it[s.key])}</span>`).join(''):`<span class="ad-pi">${r.sub}</span>`}${miss?'<span class="ad-pi w">الصوت غير متاح</span>':''}</span></span><i class="fa-solid fa-chevron-down ad-chev"></i></button>`
+ +`<div class="ad-bd"><div><div class="ad-bi">${r.slots.map(s=>aSlot(r,s,it[s.key])).join('')}<div class="ad-fl"><div><b>صوت التذكير</b>${miss?'<em>الصوت غير متاح حاليًا</em>':'<small style="direction:rtl">اضغط للاستماع</small>'}</div>${aPlay('remind',r.file)}</div></div></div></div></div>`}
 
 function aPanelA(nxk){
  const S=AD.get(),cat=AD.cat();
@@ -1066,7 +1066,7 @@ function aPanelR(){
  return`<div class="ad-c ad-p"><div class="ad-sh"><span><i class="fa-solid fa-sliders"></i></span><h4>الإعدادات العامة</h4></div><div class="ad-g dv"><div class="ad-r"><div><b>تفعيل التذكيرات</b><small>تعمل أثناء فتح التطبيق على جهازك</small></div>${aSw(R.enabled,'remind.enabled','تفعيل التذكيرات')}</div>${aSound()}${aVol(0)}</div></div>`
  +`<div class="ad-sh o"><span><i class="fa-solid fa-bell"></i></span><div><h4>التذكيرات</h4><small>${R.enabled?'فعّل التذكير الذي تريده واضبط موعده':'التذكيرات متوقفة — فعّلها من الإعدادات العامة'}</small></div></div>`
  +RM.map(aRem).join('')
- +`<div class="ad-ft"><small>تُحفظ التغييرات تلقائيًا على هذا الجهاز.</small><div><button type="button" class="ad-gh" data-ad="scan">${cat.busy?'جارٍ الفحص…':'إعادة فحص الملفات'}</button><button type="button" class="ad-gh" data-ad="reset" data-w="r"><i class="fa-solid fa-rotate-left"></i>استعادة الافتراضي</button></div></div>`}
+ +`<div class="ad-ft"><small>تُحفظ التغييرات تلقائيًا على هذا الجهاز.</small><div><button type="button" class="ad-gh" data-ad="reset" data-w="r"><i class="fa-solid fa-rotate-left"></i>استعادة الافتراضي</button></div></div>`}
 
 function aRender(fresh){
  const box=$('#kvA');if(!box||box.hidden||!$('#trk').classList.contains('open'))return;
