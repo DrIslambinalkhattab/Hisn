@@ -686,7 +686,17 @@ load();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloaded || !sessionStorage.getItem('sw-had-controller')) return;
+    reloaded = true; location.reload();
+  });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js', { scope: './', updateViaCache: 'none' })
+      .then(reg => { reg.update(); setInterval(() => reg.update(), 60 * 60 * 1000); })
+      .catch(() => {});
+    if (navigator.serviceWorker.controller) sessionStorage.setItem('sw-had-controller', '1');
+  });
 }
 </script>
 </body>
