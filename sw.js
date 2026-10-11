@@ -1,5 +1,5 @@
 const PREFIX = 'hisn-almuslim-';
-const CACHE = PREFIX + 'v3';
+const CACHE = PREFIX + 'v4';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -7,7 +7,8 @@ const ASSETS = [
   './icons/icon-512.png',
   './icons/favicon.png',
   'https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js',
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.9/dist/umd/supabase.js'
 ];
 
 self.addEventListener('install', e => {
@@ -30,8 +31,10 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  // طلبات Supabase (الحسابات والمزامنة): لا تمر على الكاش أبدًا
+  if (url.hostname.endsWith('.supabase.co') || url.hostname.endsWith('.supabase.in')) return;
   const inScope = url.href.startsWith(self.registration.scope);
-  const allowedCDN = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com' || url.hostname === 'cdnjs.cloudflare.com';
+  const allowedCDN = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com' || url.hostname === 'cdnjs.cloudflare.com' || url.hostname === 'cdn.jsdelivr.net';
   if (!inScope && !allowedCDN) return;
 
   // ملفات الصوت (الأذان والتذكيرات): يتعامل معها المتصفح مباشرة بدون الكاش (طلبات Range)
